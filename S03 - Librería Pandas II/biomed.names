@@ -1,0 +1,30 @@
+Description
+Author:
+Source: Unknown - Date unknown
+Please cite:
+
+February 23, 1982
+
+The 1982 annual meetings of the American Statistical Association (ASA) will be held August 16-19, 1982 in Cincinnati. At that meeting, the ASA Committee on Statistical Graphics plans to sponsor an "Exposition of Statistical Graphics Technology." The purpose of this activity is to more fully inform the ASA membership about the capabilities and uses of computer graphcis in statistical work. This letter is to invite you to participate in the Exposition.
+
+Attached is a set of biomedical data containing 209 observations (134 for "normals" and 75 for "carriers"). Each vendor of provider of statistical graphics software participating in the Exposition is to analyze these data using their software and to prepare tabular, graphical and text output illustrating the use of graphics in these analyses and summarizing their conclusions. The tabular and graphical materials must be direct computer output from the statistical graphics software; the textual descriptions and summaries need not be. The total display space available to each participant at the meeting will be a standard poster- board (approximately 4' x 2 1/2'). All entries will be displayed in one location at the meetings, together with brief written commentary by the committee summarizing the results of this activity.
+
+Reference
+
+Exposition of Statistical Graphics Technology, L. H. Cox, M. M. Johnson, K. Kafadar, ASA Proc Stat. Comp Section, 1982, pp 55-56. Enclosures
+
+THE DATA
+
+The following data arose in a study to develop screening methods to identify carriers of a rare genetic disorder. Four measurements m1, m2, m3, m4 were made on blood samples. One of these, m1, has been used before. Because the disease is rare, there are only a few carriers of the disease from whom data are available. The data come in two files, one for normals and one for carriers of the disease. A description of the files is provided. The data have been stripped of the names and other identifiers. Otherwise the data are as received by the analyst.
+
+PURPOSE OF THE ANALYSIS
+
+The purpose of the analysis is to develop a screening procedure to detect carriers and to describe its effectiveness. Experts in the field have noted that young people tend to have higher measurements. The laboratory which prepared the measurements is worried that there may be a systematic drift over time in their measurement process. These effects should be considered in the analysis. Can graphical displays show the differences between the distributions of carriers and normals?
+
+FILE DESCRIPTION
+
+Column Content
+
+1 Observation number (sequence number per patient) Note that there are several samples per patient for some patients. 2-8 Blank 9-12 Hospital identification number for blood sample 13-18 Blank 19-20 Age of patient 21-26 Blank 27-32 Date that blood sample was taken (mmddyy) Note that all day entries are 00. 33-39 Blank 40-43 ml (measurement 1) sss.s 44-50 Blank 51-54 m2 (measurement 2) xxx.x Eight missing data points. 55-61 Blank 62-65 m3 (measurement 3) xxx.x 66-72 Blank 73-75 m4 (measurement 4) xxx Seven missing data points.
+
+Information about the dataset CLASSTYPE: nominal CLASSINDEX: last
