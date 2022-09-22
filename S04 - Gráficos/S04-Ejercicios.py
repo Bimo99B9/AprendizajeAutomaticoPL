@@ -2,6 +2,7 @@ import matplotlib.pyplot as plt
 import pandas as pd
 
 print("1. Carga el fichero ** iris.data ** (es un archivo de texto). Si no tiene cabecera debes asignar nombres a las columnas mediante el parámetro 'names'")
+
 df = pd.read_csv('S04 - Gráficos/iris.data', names=['seplen', 'sepwid', 'petlen', 'petwid', 'class'])
 X = df.drop(['class'], axis=1)
 y = df.pop('class')
