@@ -18,7 +18,7 @@ from sklearn.model_selection import (
 from sklearn.neighbors import KNeighborsClassifier
 from sklearn.pipeline import Pipeline
 from sklearn.metrics import accuracy_score
-from scipy.stats import randint
+
 
 df = pd.read_csv(
     "S11 - Evaluación del modelo tras ajustar hiperparámetros/heart_failure_clinical_records_dataset.csv",
