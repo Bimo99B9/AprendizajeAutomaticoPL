@@ -108,4 +108,4 @@ dot_data = export_graphviz(
 
 graph = pydotplus.graph_from_dot_data(dot_data)
 
-graph.write_png("arbol best estimator.png")
+graph.write_png("S12 - Árboles de decisión/arbol best estimator.png")
