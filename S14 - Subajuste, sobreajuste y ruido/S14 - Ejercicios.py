@@ -127,3 +127,4 @@ dot_data = export_graphviz(
 )
 
 graph = pydotplus.graph_from_dot_data(dot_data)
+graph.write_png("arbol2.png")
