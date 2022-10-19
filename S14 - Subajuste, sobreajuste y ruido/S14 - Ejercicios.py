@@ -2,7 +2,6 @@ from sklearn.model_selection import train_test_split, GridSearchCV, StratifiedKF
 from sklearn import metrics
 from sklearn.neighbors import KNeighborsClassifier
 from sklearn.tree import DecisionTreeClassifier, export_graphviz
-import matplotlib.pyplot as plt
 import pandas as pd
 from sklearn import tree
 import pydotplus
