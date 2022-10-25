@@ -4,7 +4,6 @@ from sklearn.dummy import DummyClassifier
 from sklearn.neighbors import KNeighborsClassifier
 from sklearn.pipeline import Pipeline
 from sklearn.preprocessing import StandardScaler, LabelEncoder
-import seaborn as sns
 import matplotlib.pyplot as plt
 
 print("###################################################################")

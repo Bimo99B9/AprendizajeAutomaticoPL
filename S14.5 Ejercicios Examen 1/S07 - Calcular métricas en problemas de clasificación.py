@@ -1,8 +1,6 @@
 import pandas as pd
-from sklearn import preprocessing, impute, metrics
+from sklearn import metrics
 from sklearn.dummy import DummyClassifier
-import seaborn as sns
-import matplotlib.pyplot as plt
 
 print("###################################################################")
 print("1. Carga el fichero **ILPD.data** (es un archivo de texto).")
