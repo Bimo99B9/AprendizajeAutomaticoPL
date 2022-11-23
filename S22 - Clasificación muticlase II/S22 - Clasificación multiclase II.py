@@ -2,9 +2,12 @@ import numpy as np
 import pandas as pd
 from sklearn import metrics
 from sklearn.ensemble import RandomForestClassifier
+from sklearn.linear_model import LogisticRegression
 from sklearn.model_selection import train_test_split
+from sklearn.multiclass import OneVsOneClassifier, OneVsRestClassifier
 from sklearn.naive_bayes import GaussianNB
 from sklearn.neighbors import KNeighborsClassifier
+from sklearn.svm import SVC
 from sklearn.tree import DecisionTreeClassifier
 
 
@@ -17,6 +20,18 @@ def entrena_y_evalua(X_train, X_test, y_train, y_test, sistema):
         sys = DecisionTreeClassifier(random_state=1234)
     elif sistema == "RandomForestClassifier":
         sys = RandomForestClassifier(random_state=1234, n_jobs=-1)
+    elif sistema == "SVC":
+        sys = SVC()
+    elif sistema == "LogisticRegression":
+        sys = LogisticRegression()
+    elif sistema == "ovo(rl)":
+        sys = OneVsOneClassifier(LogisticRegression())
+    elif sistema == "ovo(svc)":
+        sys = OneVsOneClassifier(SVC())
+    elif sistema == "ovr(rl)":
+        sys = OneVsRestClassifier(LogisticRegression())
+    elif sistema == "ovr(svc)":
+        sys = OneVsRestClassifier(SVC())
     else:
         print("Sistema no reconocido")
         exit()
@@ -42,21 +57,21 @@ def entrena_y_evalua(X_train, X_test, y_train, y_test, sistema):
 
 
 print("###################################################################")
-print("1. Cargar conjunto de datos.")
+print("1. Carga los datos de la pestaña FHR que hay en el fichero **CTG.xls**. ")
 print("###################################################################")
 
 df = pd.read_excel(
-    "S21 - Clasificación multiclase I\CTG.xls", sheet_name="NSP")
+    "S22 - Clasificación muticlase II\CTG.xls", sheet_name="FHR")
 filas, columnas = df.shape
 
 X = df.iloc[:, 0: (columnas - 1)]
 y = df.iloc[:, (columnas - 1)]
 
-class_names = ["Normal", "Suspect", "Pathologic"]
+class_names = ["A", "B", "C", "D", "E", "AD", "DE", "LD", "FS", "SUSP"]
 
 
 print("###################################################################")
-print("2. Hold-out 70-30")
+print("2. Se debe calcular para los sistemas vistos en esta sesión (y en la sesión anterior) las métricas accuracy y las medias ponderadas de precision, recall y F1.")
 print("###################################################################")
 
 X_train, X_test, y_train, y_test = train_test_split(
@@ -68,6 +83,12 @@ sistemas = [
     "GaussianNB",
     "DecisionTreeClassifier",
     "RandomForestClassifier",
+    "SVC",
+    "LogisticRegression",
+    "ovo(rl)",
+    "ovo(svc)",
+    "ovr(rl)",
+    "ovr(svc)"
 ]
 
 resultados = np.empty((len(sistemas), 4))
