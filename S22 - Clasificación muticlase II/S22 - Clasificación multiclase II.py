@@ -11,7 +11,7 @@ from sklearn.svm import SVC
 from sklearn.tree import DecisionTreeClassifier
 
 
-def entrena_y_evalua(X_train, X_test, y_train, y_test, sistema):
+def entrena_y_evalua(X_train, X_test, y_train, y_test, sistema):  # TODO
     if sistema == "KNeighborsClassifier":
         sys = KNeighborsClassifier()
     elif sistema == "GaussianNB":
