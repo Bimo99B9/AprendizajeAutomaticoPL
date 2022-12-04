@@ -2,11 +2,15 @@ import numpy as np
 import pandas as pd
 from sklearn import metrics
 from sklearn.dummy import DummyRegressor
-from sklearn.ensemble import RandomForestClassifier
+from sklearn.ensemble import RandomForestRegressor, AdaBoostRegressor
 from sklearn.linear_model import LinearRegression, Ridge
 from sklearn.model_selection import train_test_split, KFold, cross_val_score
 from sklearn.pipeline import Pipeline
 from sklearn.preprocessing import PolynomialFeatures, StandardScaler
+from sklearn.neighbors import KNeighborsRegressor
+from sklearn.svm import SVR
+from sklearn.tree import DecisionTreeRegressor
+from xgboost import XGBRegressor
 
 
 def entrena_y_evalua(X_train, X_test, y_train, y_test, sistema):
@@ -22,6 +26,20 @@ def entrena_y_evalua(X_train, X_test, y_train, y_test, sistema):
         )
     elif sistema == "PolynomialRidge":
         sys = Pipeline([("pf", PolynomialFeatures(degree=2)), ("ridge", Ridge())])
+    elif sistema == "KNeighborsRegressor":
+        sys = KNeighborsRegressor()
+    elif sistema == "SVM-poly":
+        sys = SVR(kernel="poly")
+    elif sistema == "SVM-rbf":
+        sys = SVR(kernel="rbf")
+    elif sistema == "DecisionTreeRegressor":
+        sys = DecisionTreeRegressor(random_state=1234)
+    elif sistema == "RandomForestRegressor":
+        sys = RandomForestRegressor(random_state=1234)
+    elif sistema == "AdaBoostRegressor":
+        sys = AdaBoostRegressor(random_state=1234)
+    elif sistema == "XGBRegressor":
+        sys = XGBRegressor()
     else:
         print("Sistema no reconocido")
         exit()
@@ -49,27 +67,21 @@ def entrena_y_evalua(X_train, X_test, y_train, y_test, sistema):
 
 
 print("###################################################################")
-print("1. Carga los datos del fichero **housing.data**.")
+print("1. Carga los datos del fichero **airfoil_self_noise.data**.")
 print("###################################################################")
 
 cabecera = [
-    "CRIM",
-    "ZN",
-    "INDUS",
-    "CHAS",
-    "NOX",
-    "RM",
-    "AGE",
-    "DIS",
-    "RAD",
-    "TAX",
-    "PTRATIO",
-    "B",
-    "LSTAT",
-    "MEDV",
+    "Frequency",
+    "Angle of attack",
+    "Chord length",
+    "Free-stream velocity",
+    "Suction",
+    "Decibels",
 ]
 df = pd.read_csv(
-    "S23 - Algoritmos de regresión I\housing.data", names=cabecera, sep="\s+"
+    "S24 - Algoritmos de regresión II\\airfoil_self_noise.data",
+    names=cabecera,
+    sep="\t",
 )
 filas, columnas = df.shape
 
@@ -88,9 +100,7 @@ X_train, X_test, y_train, y_test = train_test_split(
 )
 
 print("###################################################################")
-print(
-    "3. Evalúa los siguientes sistemas (con sus hiperparámetros por defecto) sobre esa partición: sistema media, regresión lineal (con y sin regularización) y regresión polinomial (con y sin regularización)."
-)
+print("3. Evalúa el rendimiento de varios algoritmos de los comentados en esta sesión.")
 print("###################################################################")
 
 sistemas = [
@@ -99,6 +109,13 @@ sistemas = [
     "Ridge",
     "PolynomialRegression",
     "PolynomialRidge",
+    "KNeighborsRegressor",
+    "SVM-poly",
+    "SVM-rbf",
+    "DecisionTreeRegressor",
+    "RandomForestRegressor",
+    "AdaBoostRegressor",
+    "XGBRegressor",
 ]
 
 resultados = np.empty((len(sistemas), 3))
@@ -109,40 +126,9 @@ for sistema in sistemas:
 
 print("###################################################################")
 print(
-    "4. Muestra, en forma de tabla, los resultados de las tres métricas explicadas en el notebook."
+    "4. Muestra, en forma de tabla, los resultados de las métricas explicadas en el notebook."
 )
 print("###################################################################")
 
 df_resultados = pd.DataFrame(resultados, index=sistemas, columns=["MAE", "MSE", "R2"])
 print(df_resultados)
-
-print("###################################################################")
-print(
-    "5. Finalmente, calcula el error cuadrático medio que obtiene una regresión polinomial en una validación cruzada de 5 folds."
-)
-print("###################################################################")
-
-# Pipeline con polynomialfeatures y regresión lineal.
-sys_pf_linr = Pipeline(
-    [
-        ("pf", PolynomialFeatures(degree=2, include_bias=True)),
-        ("ridge", LinearRegression()),
-    ]
-)
-
-# generador de folds partiendo el conjunto en 5 trozos.
-folds = KFold(n_splits=5, shuffle=True, random_state=1234)
-
-# validación cruzada para el DummyRegressor.
-scores = cross_val_score(
-    sys_pf_linr, X, y, cv=folds, scoring="neg_mean_squared_error", verbose=1
-)
-
-print(
-    "\nRegresión Polinomial neg_MSE (mean +- std): %0.4f +- %0.4f"
-    % (scores.mean(), scores.std())
-)
-print(
-    "Regresión Polinomial MSE (mean +- std): %0.4f +- %0.4f"
-    % (-scores.mean(), scores.std())
-)
