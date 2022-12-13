@@ -1,6 +1,5 @@
 import pandas as pd
-from sklearn.model_selection import (GridSearchCV, StratifiedKFold,
-                                     cross_val_score)
+from sklearn.model_selection import GridSearchCV, StratifiedKFold, cross_val_score
 from sklearn.preprocessing import LabelEncoder
 from sklearn.svm import SVC
 
@@ -18,13 +17,16 @@ class_enc = LabelEncoder()
 df["clase"] = class_enc.fit_transform(df["clase"])
 print("Clases: ", class_enc.classes_)
 
-X = df.iloc[:, 0: (columnas - 1)]
+X = df.iloc[:, 0 : (columnas - 1)]
 y = df.iloc[:, (columnas - 1)]
 
 
 print("###################################################################")
 print(
     "2. Prueba los kernels polinómico y RBF (prueba diferentes valores para los hiperparámetros `C`, `degree` y `gamma`)."
+)
+print(
+    "3. Busca los mejores valores para los hiperparámetros y evalúa el rendimiento final del modelo (utiliza una `GridSearchCV` dentro de una validación cruzada como se vio en la sesión 11)."
 )
 print("###################################################################")
 
@@ -53,8 +55,7 @@ scores_svc = cross_val_score(
     gs, X, y, cv=folds10, scoring="accuracy", verbose=1, n_jobs=-1
 )
 
-print("\nSVC (mean+-std): %0.4f +- %0.4f" %
-      (scores_svc.mean(), scores_svc.std()))
+print("\nSVC (mean+-std): %0.4f +- %0.4f" % (scores_svc.mean(), scores_svc.std()))
 
 # Búsqueda sin validación para obtener la mejor combinación.
 res_gs = gs.fit(X, y)
@@ -85,15 +86,8 @@ scores_svc = cross_val_score(
     gs, X, y, cv=folds10, scoring="accuracy", verbose=1, n_jobs=-1
 )
 
-print("\nSVC (mean+-std): %0.4f +- %0.4f" %
-      (scores_svc.mean(), scores_svc.std()))
+print("\nSVC (mean+-std): %0.4f +- %0.4f" % (scores_svc.mean(), scores_svc.std()))
 
 # Búsqueda sin validación para obtener la mejor combinación.
 res_gs = gs.fit(X, y)
 print("Mejor combinación de hiperparámetros: ", res_gs.best_params_)
-
-print("###################################################################")
-print(
-    "3. Busca los mejores valores para los hiperparámetros y evalúa el rendimiento final del modelo (utiliza una `GridSearchCV` dentro de una validación cruzada como se vio en la sesión 11). "
-)
-print("###################################################################")
