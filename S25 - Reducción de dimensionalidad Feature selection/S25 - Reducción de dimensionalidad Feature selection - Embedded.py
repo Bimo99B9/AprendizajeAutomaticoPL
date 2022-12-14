@@ -1,10 +1,9 @@
 import pandas as pd
 from sklearn import metrics
-from sklearn.tree import DecisionTreeClassifier
-from sklearn.feature_selection import SelectFromModel
 from sklearn.ensemble import RandomForestClassifier
+from sklearn.feature_selection import SelectFromModel
 from sklearn.neighbors import KNeighborsClassifier
-
+from sklearn.tree import DecisionTreeClassifier
 
 print("###################################################################")
 print(
@@ -19,7 +18,7 @@ df = pd.read_csv(
 )
 filas, columnas = df.shape
 
-X_train = df.iloc[:, 0 : (columnas - 1)]
+X_train = df.iloc[:, 0: (columnas - 1)]
 y_train = df.iloc[:, (columnas - 1)]
 
 df = pd.read_csv(
@@ -27,7 +26,7 @@ df = pd.read_csv(
 )
 filas, columnas = df.shape
 
-X_test = df.iloc[:, 0 : (columnas - 1)]
+X_test = df.iloc[:, 0: (columnas - 1)]
 y_test = df.iloc[:, (columnas - 1)]
 
 
@@ -59,7 +58,8 @@ sys_rf = RandomForestClassifier(random_state=1234)
 sys_rf.fit(X_train, y_train)
 
 # Fijando un umbral mayor que la que tendrían si todos fuesen igual de relevantes (1/64).
-seleccionados = sys_rf.feature_names_in_[sys_rf.feature_importances_ > (1 / 64)]
+seleccionados = sys_rf.feature_names_in_[
+    sys_rf.feature_importances_ > (1 / 64)]
 print("Atributos seleccionados (%d): " % len(seleccionados))
 print(seleccionados)
 
@@ -72,7 +72,8 @@ print("RandomForest como selector de atributos")
 selector = SelectFromModel(sys_rf, threshold=(1 / 64))
 selector.fit(X_train, y_train)
 
-print("Atributos seleccionados (%d): " % (selector.get_feature_names_out().shape[0]))
+print("Atributos seleccionados (%d): " %
+      (selector.get_feature_names_out().shape[0]))
 X_train_rel = selector.transform(X_train)
 X_test_rel = selector.transform(X_test)
 

@@ -1,11 +1,11 @@
-import pandas as pd
 import numpy as np
+import pandas as pd
 from sklearn import metrics
-from sklearn.neighbors import KNeighborsClassifier
-from sklearn.tree import DecisionTreeClassifier
 from sklearn.feature_selection import RFE, RFECV
 from sklearn.linear_model import LogisticRegression
 from sklearn.model_selection import StratifiedKFold
+from sklearn.neighbors import KNeighborsClassifier
+from sklearn.tree import DecisionTreeClassifier
 
 
 def wrapper(X_train, X_test, y_train, y_test, tipo_sel):
@@ -32,7 +32,8 @@ def wrapper(X_train, X_test, y_train, y_test, tipo_sel):
     selector.fit(X_train, y_train)
 
     print(
-        "Atributos seleccionados (%d): " % (selector.get_feature_names_out().shape[0])
+        "Atributos seleccionados (%d): " % (
+            selector.get_feature_names_out().shape[0])
     )
     print(selector.get_feature_names_out())
 
@@ -68,7 +69,7 @@ df = pd.read_csv(
 )
 filas, columnas = df.shape
 
-X_train = df.iloc[:, 0 : (columnas - 1)]
+X_train = df.iloc[:, 0: (columnas - 1)]
 y_train = df.iloc[:, (columnas - 1)]
 
 df = pd.read_csv(
@@ -76,7 +77,7 @@ df = pd.read_csv(
 )
 filas, columnas = df.shape
 
-X_test = df.iloc[:, 0 : (columnas - 1)]
+X_test = df.iloc[:, 0: (columnas - 1)]
 y_test = df.iloc[:, (columnas - 1)]
 
 

@@ -3,7 +3,7 @@ import pandas as pd
 from sklearn import metrics
 from sklearn.dummy import DummyRegressor
 from sklearn.linear_model import LinearRegression, Ridge
-from sklearn.model_selection import train_test_split, KFold, cross_val_score
+from sklearn.model_selection import KFold, cross_val_score, train_test_split
 from sklearn.pipeline import Pipeline
 from sklearn.preprocessing import PolynomialFeatures
 
@@ -20,7 +20,8 @@ def entrena_y_evalua(X_train, X_test, y_train, y_test, sistema):
             [("pf", PolynomialFeatures(degree=2)), ("linr", LinearRegression())]
         )
     elif sistema == "PolynomialRidge":
-        sys = Pipeline([("pf", PolynomialFeatures(degree=2)), ("ridge", Ridge())])
+        sys = Pipeline(
+            [("pf", PolynomialFeatures(degree=2)), ("ridge", Ridge())])
     else:
         print("Sistema no reconocido")
         exit()
@@ -72,7 +73,7 @@ df = pd.read_csv(
 )
 filas, columnas = df.shape
 
-X = df.iloc[:, 0 : (columnas - 1)]
+X = df.iloc[:, 0: (columnas - 1)]
 y = df.iloc[:, (columnas - 1)]
 print(X)
 print(y)
@@ -103,7 +104,8 @@ sistemas = [
 resultados = np.empty((len(sistemas), 3))
 i = 0
 for sistema in sistemas:
-    resultados[i, :] = entrena_y_evalua(X_train, X_test, y_train, y_test, sistema)
+    resultados[i, :] = entrena_y_evalua(
+        X_train, X_test, y_train, y_test, sistema)
     i = i + 1
 
 print("###################################################################")
@@ -112,7 +114,8 @@ print(
 )
 print("###################################################################")
 
-df_resultados = pd.DataFrame(resultados, index=sistemas, columns=["MAE", "MSE", "R2"])
+df_resultados = pd.DataFrame(
+    resultados, index=sistemas, columns=["MAE", "MSE", "R2"])
 print(df_resultados)
 
 print("###################################################################")
